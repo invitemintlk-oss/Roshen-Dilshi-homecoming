@@ -16,7 +16,7 @@ export default function RsvpForm({ defaultName = "" }: { defaultName?: string })
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!attending) {
-      setMessage("Please let us know if you'll attend.");
+      setMessage("Please choose whether you can join us.");
       return;
     }
     const who = name.trim();
@@ -44,23 +44,23 @@ export default function RsvpForm({ defaultName = "" }: { defaultName?: string })
   return (
     <form className="rsvp-form" onSubmit={submit}>
       <div className="field">
-        <label htmlFor="se-name">Full name</label>
+        <label htmlFor="se-name">Your name</label>
         <input id="se-name" type="text" required placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
       </div>
       <div className="field">
-        <label htmlFor="se-phone">Mobile number</label>
-        <input id="se-phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+94 7X XXX XXXX" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <label htmlFor="se-phone">Phone number</label>
+        <input id="se-phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="07X XXX XXXX" value={phone} onChange={(e) => setPhone(e.target.value)} />
       </div>
       <div className="field">
-        <p className="flabel">Will you attend?</p>
+        <p className="flabel">Can you join us?</p>
         <div className="choice">
-          <button type="button" className={attending === "yes" ? "selected" : ""} onClick={() => setAttending("yes")}>Joyfully accept</button>
-          <button type="button" className={attending === "no" ? "selected" : ""} onClick={() => setAttending("no")}>Regretfully decline</button>
+          <button type="button" className={attending === "yes" ? "selected" : ""} onClick={() => setAttending("yes")}>Yes, I&apos;ll be there</button>
+          <button type="button" className={attending === "no" ? "selected" : ""} onClick={() => setAttending("no")}>Sorry, I can&apos;t</button>
         </div>
       </div>
       {attending !== "no" && (
         <div className="field">
-          <p className="flabel">Number of guests</p>
+          <p className="flabel">How many of you?</p>
           <div className="stepper">
             <button type="button" aria-label="Decrease guest count" disabled={guests <= 1} onClick={() => setGuests((g) => g - 1)}>-</button>
             <span id="gCount">{guests}</span>
@@ -69,7 +69,7 @@ export default function RsvpForm({ defaultName = "" }: { defaultName?: string })
         </div>
       )}
       <button type="submit" className="btn btn-block" disabled={sent || sending}>
-        <Icon name="send" size={16} stroke={1.6} />{sending ? "Sending..." : sent ? "RSVP sent" : "Send RSVP"}
+        <Icon name="send" size={16} stroke={1.6} />{sending ? "Sending..." : sent ? "Reply sent" : "Send reply"}
       </button>
       <p className="form-msg" role="status" aria-live="polite">{message}</p>
     </form>

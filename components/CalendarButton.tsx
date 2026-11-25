@@ -52,8 +52,8 @@ export default function CalendarButton() {
         onClick={() => setOpen((o) => !o)}>
         <span className="cal-ic"><Icon name="calendarPlus" size={18} stroke={1.6} /></span>
         <span className="cal-text">
-          <span className="cal-title">Add to Calendar</span>
-          <span className="cal-sub">Save the date to your calendar</span>
+          <span className="cal-title">Add to my calendar</span>
+          <span className="cal-sub">Google, Apple or Outlook</span>
         </span>
         <span className="cal-chev"><Icon name="chevron" size={16} stroke={1.6} /></span>
       </button>

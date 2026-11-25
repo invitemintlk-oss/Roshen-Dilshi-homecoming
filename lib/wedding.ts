@@ -35,7 +35,7 @@ export const wedding = {
     mapQuery: "Lake Edge Holiday Inn, Tissamaharama, Sri Lanka",
   },
 
-  // Order of the day, shown as road signs. Leave time empty until it is confirmed.
+  // Programme, shown as a timeline. Leave time empty until it is confirmed.
   events: [
     { title: "Start", time: "10:00 AM", icon: "pin", note: "ආරම්භය" },
     { title: "Cocktail Hour", time: "12:00 PM", icon: "glass", note: "කොක්ටේල් පැය" },
@@ -68,7 +68,7 @@ export const wedding = {
 export const coupleNames = `${wedding.partner1} & ${wedding.partner2}`;
 
 // Link-preview image for WhatsApp, Facebook, etc.
-export const ogImage = { url: "/assets/og-cheshan-chalaki.jpg", width: 1200, height: 1200, alt: `${coupleNames} · ${wedding.eventName}` };
+export const ogImage = { url: "/assets/og-homecoming.jpg", width: 1200, height: 1200, alt: `${coupleNames} · ${wedding.eventName}` };
 
 export const mapsLink =
   "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(wedding.venue.mapQuery);
