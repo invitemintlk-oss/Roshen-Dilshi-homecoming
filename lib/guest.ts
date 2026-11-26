@@ -33,15 +33,15 @@ export function guestFromParam(param: string): string {
   return cleanName(name);
 }
 
-// Sinhala WhatsApp message. `name` is the display name; the "Dear" prefix is never
-// repeated because the greeting (ආදරණීය) already adds it.
-export function invitationMessage(name: string, link: string, coupleSi: string): string {
+// WhatsApp message sent with each guest link. `name` is the display name; the
+// "Dear" prefix is never repeated because the greeting already adds it.
+export function invitationMessage(name: string, link: string, couple: string): string {
   return [
-    `ආදරණීය ${name} ❤️`,
-    "අපගේ Homecoming උත්සවයට ඔබව ඉතා ආදරයෙන් ආරාධනා කරන්නෙමු. අපගේ ජීවිතයේ මෙම සුවිශේෂී දිනය ඔබ සමඟ සැමරීමට අපි බලාපොරොත්තු වෙමු.",
-    "ඔබගේ පැමිණීම අපට මහත් සතුටක් වනු ඇත.",
-    "ආරාධනා පත්‍රය සහ සියලු විස්තර පහත සබැඳියෙන් බලන්න 🌐:",
+    `Dear ${name} ❤️`,
+    "With great joy, we warmly invite you to celebrate our homecoming. It would mean the world to us to share this special day with you.",
+    "Your presence will make our celebration complete.",
+    "Please view the invitation and all the details here 🌐:",
     link,
-    `ආදරයෙන්,\n❤️ ${coupleSi}`,
+    `With love,\n❤️ ${couple}`,
   ].join("\n\n");
 }

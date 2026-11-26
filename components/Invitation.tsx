@@ -5,23 +5,20 @@ import Icon, { type IconName } from "./Icon";
 import Countdown from "./Countdown";
 import CalendarButton from "./CalendarButton";
 import RsvpForm from "./RsvpForm";
-import NightSky from "./NightSky";
+import Petals from "./Petals";
+import { ArchPhoto, Crest, Divider, Toran } from "./Ornaments";
 import { coupleNames, mapsEmbed, mapsLink, wedding } from "@/lib/wedding";
 
 type Phase = "closed" | "opening" | "gone" | "removed";
 
 const parents = wedding.parents.filter((p) => p.names.trim());
+const [month, year] = [wedding.dateLong.split(" ")[1], wedding.dateParts[2]];
 
-function Sprig() {
-  // Small drawn divider: a reed sprig either side of a sun
-  return (
-    <svg className="sprig" viewBox="0 0 120 16" aria-hidden="true">
-      <path d="M2 8h44M74 8h44" stroke="currentColor" strokeWidth="1" />
-      <circle cx="60" cy="8" r="4" fill="currentColor" />
-      <path d="M60 0v2M60 14v2M52 8h2M66 8h2M54.3 2.3l1.4 1.4M64.3 12.3l1.4 1.4M54.3 13.7l1.4-1.4M64.3 3.7l1.4-1.4" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-    </svg>
-  );
-}
+const gallery = [
+  { src: "/pre/couple-1.jpg", alt: `${coupleNames} in wedding clothes in front of the Taj Mahal`, caption: "Two hearts" },
+  { src: "/pre/couple-3.jpg", alt: `${coupleNames} looking at each other at sunset`, caption: "One story" },
+  { src: "/pre/couple-2.jpg", alt: `${coupleNames} embracing under hanging lamps`, caption: "Forever" },
+];
 
 export default function Invitation({ guest = "" }: { guest?: string }) {
   const [phase, setPhase] = useState<Phase>("closed");
@@ -79,7 +76,7 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
 
   return (
     <>
-      <NightSky />
+      <Petals />
 
       {/* ============ WELCOME SCREEN ============ */}
       {phase !== "removed" && (
@@ -90,12 +87,11 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
 
           <div className="welcome-top">
             <p className="welcome-kicker w-in" style={{ ["--d" as string]: "0.3s" }}>
-              <span aria-hidden="true" />A Homecoming Invitation<span aria-hidden="true" />
+              <span aria-hidden="true" />A {wedding.eventName} Invitation<span aria-hidden="true" />
             </p>
             <p className="welcome-names w-in" style={{ ["--d" as string]: "0.7s" }}>
               {wedding.partner1}<span className="welcome-amp">&amp;</span>{wedding.partner2}
             </p>
-            <p className="welcome-si w-in" lang="si" style={{ ["--d" as string]: "1.1s" }}>{wedding.namesSi}</p>
             <p className="welcome-date w-in" style={{ ["--d" as string]: "1.4s" }}>{wedding.dateParts.join(" · ")}</p>
           </div>
 
@@ -118,77 +114,126 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
       <main id="main">
         {/* ============ HERO ============ */}
         <header id="hero" className="hero">
-          <p className="label">{wedding.eventName} Celebration</p>
+          <Toran className="hero-toran" />
+          <p className="kicker">The Homecoming Of</p>
+          <ArchPhoto src="/pre/couple-2.jpg" alt={`${coupleNames}, illustrated in traditional Indian wedding clothes`} className="hero-arch" />
           <h1 className="hero-names">
             <span>{wedding.partner1}</span>
             <span className="hero-and" aria-hidden="true">&amp;</span>
             <span className="sr">and</span>
             <span>{wedding.partner2}</span>
           </h1>
-          <p className="hero-si" lang="si">{wedding.namesSi}</p>
-          <Sprig />
-          <p className="hero-line">With the blessings of our families, we warmly invite you to celebrate our {wedding.eventName.toLowerCase()}.</p>
+          <p className="hero-line">are home as husband and wife, and the party is going full Bollywood!</p>
+          <Divider />
 
-          <div className="hero-when">
-            <span className="label">{wedding.weekday}</span>
-            <strong>{wedding.dateLong}</strong>
-            <span lang="si">{wedding.dateSi}</span>
-            <span className="hero-where">{wedding.venue.name} · {wedding.venue.area}</span>
+          <div className="date-strip" aria-label={`${wedding.weekday}, ${wedding.dateLong} at ${wedding.timeLabel}`}>
+            <span className="ds-month">{month}</span>
+            <div className="ds-row">
+              <span className="ds-side">{wedding.weekday}</span>
+              <strong className="ds-day">{wedding.dateParts[0]}</strong>
+              <span className="ds-side">{wedding.timeLabel}</span>
+            </div>
+            <span className="ds-year">{year}</span>
           </div>
+          <p className="hero-where"><Icon name="pin" size={15} stroke={1.6} /> {wedding.venue.name}, {wedding.venue.area}</p>
 
-          {guest && (
-            <div className="hero-guest">
-              <span className="label">Specially invited</span>
-              <span>We cordially invite</span>
-              <strong>{guest}</strong>
-              <span>to celebrate our special day with us.</span>
-            </div>
-          )}
-
-          {parents.length > 0 && (
-            <div className="hero-parents">
-              {parents.map((p) => (
-                <p key={p.label}><span className="label">{p.label}</span><span lang="si">{p.names}</span></p>
-              ))}
-            </div>
-          )}
-
-          <a href="#countdown" className="hero-more">
-            Details below <Icon name="chevron" size={16} stroke={1.6} />
+          <a href="#card" className="hero-more">
+            Scroll down <Icon name="chevron" size={16} stroke={1.6} />
           </a>
         </header>
 
-        {/* ============ COUNTDOWN ============ */}
-        <section id="countdown" className="panel rise" aria-labelledby="h-count">
-          <p className="label">Save the date</p>
-          <h2 id="h-count" className="panel-title">The celebration begins in</h2>
-          <Countdown to={wedding.start} />
+        {/* ============ INVITATION CARD ============ */}
+        <section id="card" className="invite-card rise" aria-label="Invitation">
+          {parents.map((p) => (
+            <div key={p.names} className="ic-parents">
+              <span className="ic-small">{p.label}</span>
+              <strong>{p.names}</strong>
+            </div>
+          ))}
+          <p className="ic-text">
+            request the pleasure of {guest ? <>the company of</> : <>your company</>}
+          </p>
+          {guest && <p className="ic-guest">{guest}</p>}
+          <p className="ic-text">at the homecoming celebration of</p>
+          <p className="ic-names">{wedding.partner1} <span>&amp;</span> {wedding.partner2}</p>
+          <Divider />
+          <p className="ic-when">{wedding.weekday} · {wedding.dateLong} · {wedding.timeLabel}</p>
+          <p className="ic-where">{wedding.venue.name}<br />{wedding.venue.address}</p>
+        </section>
+
+        {/* ============ CINEMA MARQUEE + COUNTDOWN ============ */}
+        <section id="countdown" className="marquee rise" aria-labelledby="h-count">
+          <div className="marquee-inner">
+            <h2 id="h-count" className="mq-title">
+              {wedding.partner1} <span>&amp;</span> {wedding.partner2}
+            </h2>
+            <p className="mq-tag">A love story in full colour</p>
+            <p className="mq-cast"><span>Starring</span>{wedding.partner1} as the Groom · {wedding.partner2} as the Bride</p>
+            <p className="mq-premiere">Grand premiere in</p>
+            <Countdown to={wedding.start} />
+            <p className="mq-date">{wedding.dateShort.replace(/ /g, "")} · {wedding.timeLabel} · {wedding.venue.name}</p>
+          </div>
+        </section>
+
+        {/* ============ GALLERY: FILM STRIP ============ */}
+        <section id="story" className="story rise" aria-labelledby="h-story">
+          <p className="kicker">Picture perfect</p>
+          <h2 id="h-story" className="section-title gold-text">Our Story</h2>
+          <div className="film" tabIndex={0} aria-label="Photos of the couple, scroll sideways for more">
+            {gallery.map((g) => (
+              <figure key={g.src} className="film-frame">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={g.src} alt={g.alt} loading="lazy" />
+                <figcaption>{g.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
 
         {/* ============ PROGRAMME ============ */}
-        <section id="events" className="panel rise" aria-labelledby="h-prog">
-          <p className="label">{wedding.weekday}, {wedding.dateLong}</p>
-          <h2 id="h-prog" className="panel-title">Programme</h2>
+        <section id="events" className="panel panel-green rise" aria-labelledby="h-prog">
+          <Crest />
+          <p className="kicker">{wedding.weekday}, {wedding.dateLong}</p>
+          <h2 id="h-prog" className="section-title gold-text">The Evening</h2>
           <ol className="timeline">
             {wedding.events.map((ev) => (
               <li key={ev.title}>
-                <span className="tl-time">{ev.time}</span>
-                <span className="tl-mark"><Icon name={ev.icon as IconName} size={16} stroke={1.6} /></span>
+                <span className="tl-mark"><Icon name={ev.icon as IconName} size={17} stroke={1.6} /></span>
                 <span className="tl-text">
+                  {ev.time && <span className="tl-time">{ev.time}</span>}
                   <strong>{ev.title}</strong>
-                  <span lang="si">{ev.note}</span>
+                  <span className="tl-note">{ev.note}</span>
                 </span>
               </li>
             ))}
           </ol>
         </section>
 
+        {/* ============ DRESS CODE ============ */}
+        {wedding.dressCode.colors.length > 0 && (
+          <section id="dress" className="panel panel-maroon rise" aria-labelledby="h-dress">
+            <Crest />
+            <p className="kicker">Theme &amp; dress code</p>
+            <h2 id="h-dress" className="section-title gold-text">{wedding.dressCode.title}</h2>
+            {wedding.dressCode.note && <p className="panel-text">{wedding.dressCode.note}</p>}
+            <ul className="swatches">
+              {wedding.dressCode.colors.map((c) => (
+                <li key={c.name}>
+                  <span className="swatch" style={{ background: c.hex }} />
+                  <span>{c.name}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {/* ============ VENUE ============ */}
-        <section id="venue" className="panel rise" aria-labelledby="h-venue">
-          <p className="label">Venue</p>
-          <h2 id="h-venue" className="panel-title">{wedding.venue.name}</h2>
-          <p className="panel-sub">{wedding.venue.area} · <span lang="si">{wedding.venue.areaSi}</span></p>
-          <p className="panel-text">{wedding.weekday}, {wedding.dateLong}{wedding.timeLabel && ` · from ${wedding.timeLabel}`}</p>
+        <section id="venue" className="panel panel-green rise" aria-labelledby="h-venue">
+          <Crest />
+          <p className="kicker">The venue</p>
+          <h2 id="h-venue" className="section-title gold-text">{wedding.venue.name}</h2>
+          <p className="panel-text">{wedding.venue.address}</p>
+          <p className="panel-sub">{wedding.weekday}, {wedding.dateLong}{wedding.timeLabel && ` · from ${wedding.timeLabel}`}</p>
           <div className="map">
             <iframe src={mapsEmbed} title={`Map of ${wedding.venue.name}`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
           </div>
@@ -201,9 +246,10 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
         </section>
 
         {/* ============ RSVP ============ */}
-        <section id="rsvp" className="panel rise" aria-labelledby="h-rsvp">
-          <p className="label">RSVP</p>
-          <h2 id="h-rsvp" className="panel-title">Kindly reply</h2>
+        <section id="rsvp" className="panel panel-maroon rise" aria-labelledby="h-rsvp">
+          <Crest />
+          <p className="kicker">Admit one · RSVP</p>
+          <h2 id="h-rsvp" className="section-title gold-text">Book Your Seat</h2>
           <p className="panel-text">
             {wedding.rsvpBy ? `Please let us know by ${wedding.rsvpBy} if you can join us.` : "Please let us know if you can join us."}
           </p>
@@ -212,9 +258,10 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
 
         {/* ============ THANK YOU ============ */}
         <section id="footer" className="farewell rise" aria-labelledby="h-thanks">
+          <ArchPhoto src="/pre/couple-3.jpg" alt={`${coupleNames} at sunset`} className="farewell-arch" />
           <h2 id="h-thanks" className="farewell-script">Thank you</h2>
-          <p className="farewell-text">We look forward to celebrating with you by the lake.</p>
-          <Sprig />
+          <p className="farewell-text">Come dressed in your brightest colours and bring your best dance moves. We can&apos;t wait to celebrate with you!</p>
+          <Divider />
           <p className="farewell-names">With love, {coupleNames}</p>
           {wedding.contacts.length > 0 && (
             <div className="contacts">

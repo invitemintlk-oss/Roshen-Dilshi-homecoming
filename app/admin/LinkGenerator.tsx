@@ -43,7 +43,7 @@ export default function LinkGenerator() {
     setError("");
     const display = displayName(prefix, guest);
     const link = `${baseUrl()}/${encodeURIComponent(display)}`;
-    setResult({ link, message: invitationMessage(display, link, wedding.namesSi) });
+    setResult({ link, message: invitationMessage(display, link, coupleNames) });
     setStale(false);
   }
 

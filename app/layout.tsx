@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Alex_Brush, EB_Garamond, Marcellus, Noto_Serif_Sinhala } from "next/font/google";
+import { Alex_Brush, Cinzel, EB_Garamond, Great_Vibes, Marcellus } from "next/font/google";
 import { coupleNames, ogImage, wedding } from "@/lib/wedding";
 import "./globals.css";
 
+// Intro screen fonts
 const body = EB_Garamond({ subsets: ["latin"], weight: ["400", "500", "600"], style: ["normal", "italic"], variable: "--font-body" });
 const head = Marcellus({ subsets: ["latin"], weight: "400", variable: "--font-head" });
-const sinhala = Noto_Serif_Sinhala({ subsets: ["sinhala"], weight: ["400", "500", "600"], variable: "--font-si" });
 const script = Alex_Brush({ subsets: ["latin"], weight: "400", variable: "--font-script" });
+// Invitation fonts: royal capitals and a flowing script
+const royal = Cinzel({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--font-royal" });
+const vibes = Great_Vibes({ subsets: ["latin"], weight: "400", variable: "--font-vibes" });
 
 export const metadata: Metadata = {
   ...(wedding.baseUrl ? { metadataBase: new URL(wedding.baseUrl) } : {}),
@@ -22,12 +25,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#D6E9F0",
+  themeColor: "#4A0E17",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="si" className={`${body.variable} ${head.variable} ${script.variable} ${sinhala.variable}`}>
+    <html lang="en" className={`${body.variable} ${head.variable} ${script.variable} ${royal.variable} ${vibes.variable}`}>
       <body>{children}</body>
     </html>
   );

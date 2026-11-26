@@ -1,4 +1,4 @@
-// RSVP receiver for the Cheshan & Chalaki homecoming site.
+// RSVP receiver for the Roshen & Dilshi homecoming site.
 // Paste this into Extensions > Apps Script of the RSVP spreadsheet, then deploy as a web app
 // (see google-apps-script/README.md).
 
