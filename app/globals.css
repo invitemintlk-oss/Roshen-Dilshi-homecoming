@@ -66,18 +66,20 @@ button { font: inherit; cursor: pointer; }
 .btn:disabled { opacity: 0.7; cursor: default; transform: none; }
 .btn-block { width: 100%; }
 
-/* ---------- Backdrop: maroon floral wall with falling petals ---------- */
+/* ---------- Backdrop: regal peacock frame with falling peacock feathers ---------- */
 .backdrop {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
-    linear-gradient(rgba(30,4,9,0.25), rgba(30,4,9,0.45)),
-    url(/bg/maroon-frame.jpg) center / cover,
+    linear-gradient(rgba(30,4,9,0.08), rgba(30,4,9,0.3)),
+    url(/bg/peacock-frame.jpg) center / cover,
     var(--maroon);
 }
+/* Wider screens: show the whole frame in the middle, over the maroon flower texture */
 @media (min-aspect-ratio: 3/4) {
   .backdrop {
     background:
-      radial-gradient(ellipse at center, rgba(30,4,9,0.1) 30%, rgba(20,3,6,0.7) 100%),
+      url(/bg/peacock-frame.jpg) center / contain no-repeat,
+      radial-gradient(ellipse at center, rgba(30,4,9,0.2) 30%, rgba(20,3,6,0.75) 100%),
       url(/bg/maroon-flowers.jpg) center / cover,
       var(--maroon);
   }
@@ -248,17 +250,23 @@ button { font: inherit; cursor: pointer; }
 @keyframes nudge { 50% { transform: translateY(3px); } }
 
 /* ---------- Invitation card on the green and gold board ---------- */
+/* The board is drawn as a border image: the gold scrolls at top and bottom keep their shape
+   and only the plain green middle stretches, so longer text never runs into the ornaments. */
 .invite-card {
-  width: min(100%, 440px); min-height: calc(min(100vw - 2rem, 440px) * 1.49);
+  --w: min(100vw - 2rem, 440px);
+  width: var(--w);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.45rem; text-align: center;
-  padding: 30% 12% 27%;
-  background: url(/bg/green-gold-card.jpg) center / 100% 100% no-repeat;
-  border-radius: 18px; box-shadow: 0 30px 60px -24px rgba(0,0,0,0.8);
+  padding: calc(var(--w) * 0.3) calc(var(--w) * 0.1) calc(var(--w) * 0.3);
+  border: 0 solid transparent;
+  border-image: url(/bg/green-gold-card.jpg) 225 40 225 40 fill / calc(var(--w) * 0.306) calc(var(--w) * 0.054) / 0 stretch;
+  box-shadow: 0 30px 60px -24px rgba(0,0,0,0.8);
   color: var(--ivory);
 }
-.ic-parents { display: flex; flex-direction: column; gap: 0.15rem; }
+.ic-family { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+.ic-amp { font-family: var(--f-vibes); font-size: 2rem; line-height: 1; color: var(--gold); margin: 0.1rem 0 0.2rem; }
 .ic-small { font-family: var(--f-royal); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.64rem; color: var(--gold-soft); }
-.ic-parents strong { font-family: var(--f-royal); font-weight: 600; font-size: clamp(0.95rem, 4.2vw, 1.1rem); letter-spacing: 0.04em; line-height: 1.35; color: #FFE7A8; }
+.ic-parents { font-family: var(--f-royal); font-weight: 600; font-size: clamp(0.78rem, 3.5vw, 0.9rem); letter-spacing: 0.03em; line-height: 1.45; color: #FFE7A8; margin-top: 0.25rem; }
+.ic-rel { font-family: var(--f-body); font-weight: 400; font-style: italic; font-size: 1rem; letter-spacing: 0; color: rgba(255,246,230,0.85); }
 .ic-text { font-style: italic; font-size: 1.02rem; color: rgba(255,246,230,0.9); line-height: 1.35; }
 .ic-guest { font-family: var(--f-vibes); font-size: clamp(1.9rem, 8vw, 2.4rem); line-height: 1.15; color: #FFE7A8; }
 .ic-names { font-family: var(--f-vibes); font-size: clamp(2.5rem, 11vw, 3.2rem); line-height: 1.15; }

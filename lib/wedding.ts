@@ -19,9 +19,10 @@ export const wedding = {
   start: "2027-08-29T18:30:00+05:30",
   end: "2027-08-29T23:30:00+05:30",
 
-  parents: [
-    // Entries left empty are hidden on the site
-    { label: "With the blessings of", names: "Ananda Samarathunga & Renuka Gamage" },
+  // Bride and groom with their parents, shown on the invitation card in this order
+  families: [
+    { name: "Dilshi", role: "The Bride", relation: "Daughter of", parents: ["Mr. Nishantha Perera", "Mrs. Chandani Dasanayake"] },
+    { name: "Roshen", role: "The Groom", relation: "Son of", parents: ["Mr. Ananda Samarathunga", "Mrs. Renuka Gamage"] },
   ],
 
   venue: {

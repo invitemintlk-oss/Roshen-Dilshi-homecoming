@@ -5,13 +5,12 @@ import Icon, { type IconName } from "./Icon";
 import Countdown from "./Countdown";
 import CalendarButton from "./CalendarButton";
 import RsvpForm from "./RsvpForm";
-import Petals from "./Petals";
+import Feathers from "./Feathers";
 import { ArchPhoto, Crest, Divider, Toran } from "./Ornaments";
 import { coupleNames, mapsEmbed, mapsLink, wedding } from "@/lib/wedding";
 
 type Phase = "closed" | "opening" | "gone" | "removed";
 
-const parents = wedding.parents.filter((p) => p.names.trim());
 const [month, year] = [wedding.dateLong.split(" ")[1], wedding.dateParts[2]];
 
 const gallery = [
@@ -76,7 +75,7 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
 
   return (
     <>
-      <Petals />
+      <Feathers />
 
       {/* ============ WELCOME SCREEN ============ */}
       {phase !== "removed" && (
@@ -144,18 +143,22 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
 
         {/* ============ INVITATION CARD ============ */}
         <section id="card" className="invite-card rise" aria-label="Invitation">
-          {parents.map((p) => (
-            <div key={p.names} className="ic-parents">
-              <span className="ic-small">{p.label}</span>
-              <strong>{p.names}</strong>
-            </div>
-          ))}
           <p className="ic-text">
-            request the pleasure of {guest ? <>the company of</> : <>your company</>}
+            {guest ? <>We joyfully invite</> : <>We joyfully invite you</>}
           </p>
           {guest && <p className="ic-guest">{guest}</p>}
-          <p className="ic-text">at the homecoming celebration of</p>
-          <p className="ic-names">{wedding.partner1} <span>&amp;</span> {wedding.partner2}</p>
+          <p className="ic-text">to the homecoming celebration of</p>
+          {wedding.families.map((f, i) => (
+            <div key={f.name} className="ic-family">
+              {i > 0 && <span className="ic-amp" aria-hidden="true">&amp;</span>}
+              <p className="ic-names">{f.name}</p>
+              <span className="ic-small">{f.role}</span>
+              <p className="ic-parents">
+                <span className="ic-rel">{f.relation}</span><br />{f.parents[0]}
+                {f.parents[1] && <><br />&amp; {f.parents[1]}</>}
+              </p>
+            </div>
+          ))}
           <Divider />
           <p className="ic-when">{wedding.weekday} · {wedding.dateLong} · {wedding.timeLabel}</p>
           <p className="ic-where">{wedding.venue.name}<br />{wedding.venue.address}</p>
@@ -283,8 +286,8 @@ export default function Invitation({ guest = "" }: { guest?: string }) {
         </footer>
       </main>
 
-      {/* Background music: "Tumhi Dekho Naa" (Kabhi Alvida Naa Kehna) - Sonu Nigam & Alka Yagnik */}
-      <audio ref={audio} src="/assets/tumhi-dekho-naa.mp3" loop preload="auto" />
+      {/* Background music: "Dekha Tenu" (slowed + reverb) */}
+      <audio ref={audio} src="/assets/dekha-tenu.mp3" loop preload="auto" />
       {phase !== "closed" && (
         <button type="button" className="music-btn" onClick={toggleMusic}
           aria-label={playing ? "Pause music" : "Play music"} aria-pressed={playing}>
