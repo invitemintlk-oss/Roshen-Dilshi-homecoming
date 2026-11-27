@@ -21,8 +21,8 @@ export const wedding = {
 
   // Bride and groom with their parents, shown on the invitation card in this order
   families: [
-    { name: "Dilshi", role: "The Bride", relation: "Daughter of", parents: ["Mr. Nishantha Perera", "Mrs. Chandani Dasanayake"] },
     { name: "Roshen", role: "The Groom", relation: "Son of", parents: ["Mr. Ananda Samarathunga", "Mrs. Renuka Gamage"] },
+    { name: "Dilshi", role: "The Bride", relation: "Daughter of", parents: ["Mr. Nishantha Perera", "Mrs. Chandani Dasanayake"] },
   ],
 
   venue: {
